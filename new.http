@@ -5,11 +5,11 @@ GET http://localhost:3000/players/
 GET http://localhost:3000/players/1/
 
 ###3
-PUT http://localhost:3000/players/1/
-Content-Type:applicaltion/json
+PUT http://localhost:3000/players/3/
+Content-Type:application/json
 
 {
-  "playerName": "Raju"
+  "playerName": "roja"
 }
 
 ###4
@@ -19,10 +19,10 @@ GET http://localhost:3000/matches/2/
 GET http://localhost:3000/players/1/matches/
 
 ###6
-GET http://localhost:3000/matches/1/players/
+GET http://localhost:3000/matches/2/players/
 
 ###7!
-GET http://localhost:3000/players/1/playersScores/
+GET http://localhost:3000/players/1/playerScores
 
 ###
 

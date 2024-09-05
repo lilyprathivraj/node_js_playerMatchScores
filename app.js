@@ -64,10 +64,11 @@ app.get('/players/:playerId/', async (request, response) => {
 app.put('/players/:playerId/', async (request, response) => {
   const {playerId} = request.params
   const {playerName} = request.body
+  console.log(playerName)
   const updatePlayerQuery = `
         update player_details
-        set player_name = '${playerName}';
-        where player_id = ${playerId}
+        set player_name = "${playerName}"
+        where player_id = ${playerId};
     `
   await db.run(updatePlayerQuery)
   response.send('Player Details Updated')
@@ -116,7 +117,7 @@ app.get('/players/:playerId/matches', async (request, response) => {
 })
 
 //API6 !
-app.get('/matches/:matchId/players/', async (request, response) => {
+app.get('/matches/:matchId/players', async (request, response) => {
   const {matchId} = request.params
   const getmatchesQuery = `
     select * from player_match_score
@@ -137,17 +138,17 @@ app.get('/matches/:matchId/players/', async (request, response) => {
 })
 
 //API7 !
-app.get('/players/:playerId/playersScores/', async (request, response) => {
+app.get('/players/:playerId/playerScores', async (request, response) => {
   const {playerId} = request.params
   const getStatQuery = `
-    select player_id,player_name,sum(score) as score,sum(fours) as fours,sum(sixes) as sixes from player_match_score 
+    select player_name,sum(score) as score,sum(fours) as fours,sum(sixes) as sixes from player_match_score 
     inner join player_details on player_match_score.player_id=player_details.player_id
-    where player_id = '${playerId}';
+    where player_details.player_id = ${playerId};
     `
 
   const snakeToCamel = player => {
     return {
-      playerId: player.player_id,
+      playerId: parseInt(playerId),
       playerName: player.player_name,
       totalScore: player.score,
       totalFours: player.fours,
